@@ -1,0 +1,57 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: owl-site-backend # NOTE: update this with your service name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: python3.7
+  stage: dev
+  region: us-east-1
+  timeout: 30 # optional, in seconds, default is 6
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    layer: true
+    useStaticCache: true
+    useDownloadCache: true
+
+  logRetentionInDays: 7 # used to set a global value for all functions
+
+functions:
+  getsetup:
+    handler: handlers.get_setup.get_setup
+    layers:
+      - {Ref: PythonRequirementsLambdaLayer}
+    events:
+      - http:
+          path: setup
+          method: get
+
+  query:
+    handler: handlers.query_data.query_data
+    layers:
+      - { Ref: PythonRequirementsLambdaLayer }
+    events:
+      - http:
+          path: query
+          method: post
+
+plugins:
+  - serverless-python-requirements
+  - serverless-plugin-log-retention
