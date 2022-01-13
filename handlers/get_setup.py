@@ -12,7 +12,7 @@ def get_setup(event, context):
     comps = pd.read_csv('s3://owl-site-data/comps_list.csv')
     comp_resp = comps.to_dict('records')
 
-    teams = players['Team Name'].unique().tolist()
+    teams = players['teamName'].unique().tolist()
     stats = pd.read_csv('s3://owl-site-data/stats.csv')['Stat'].unique().tolist()
     stages = pd.read_csv('s3://owl-site-data/stage.csv')['Stage'].unique().tolist()
     map_types = pd.read_csv('s3://owl-site-data/map_types.csv')['Map Type'].unique().tolist()

@@ -1,8 +1,8 @@
 import json
-from datetime import datetime
 
 headers = {
-    'Access-Control-Allow-Origin': '*'
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': True
 }
 
 def api_response(body):

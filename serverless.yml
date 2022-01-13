@@ -42,6 +42,7 @@ functions:
       - http:
           path: setup
           method: get
+          cors: true
 
   query:
     handler: handlers.query_data.query_data
@@ -51,6 +52,7 @@ functions:
       - http:
           path: query
           method: post
+          cors: true
 
 plugins:
   - serverless-python-requirements
