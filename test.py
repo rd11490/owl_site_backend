@@ -1,15 +1,9 @@
-test = {
-        "teamOrPlayer": "Player",
-        "teams": ["Atlanta Reign"],
-        "opponentTeams": ["Dallas Fuel"],
-        "comp": 0,
-        "opponentComp": 0,
-        "heroes": ["Ana"],
-        "xStatNum": "Critical Hits",
-        "xStatDenom": "Shots Hit",
-        "yStatNum": "All Damage Done",
-        "yStatDenom": "Per 10"
-    }
+from re import split
 
-print(test.get('yStatDenom'))
-print(test.get('zStatDenom'))
+def camelize(string):
+        s = ''.join([a.capitalize() for a in split('([^a-zA-Z0-9])', string) if a.isalnum()])
+        return s[0].lower() + s[1:]
+
+cols = ['Team Name', 'Hero', 'All Damage Done', "Enemies EMP'd"]
+res = [camelize(c) for c in cols]
+print(res)

@@ -3,7 +3,7 @@ import boto3
 import json
 
 
-from utils.helpers import api_response, bad_request
+from utils.helpers import api_response, bad_request, camelize
 
 s3_client = boto3.client('s3')
 
@@ -47,10 +47,10 @@ def query_data(event, context):
         data = data[data['Map Name'].isin(map_names)]
 
     if comp is not None:
-        data = data[data['Classification'] == comp]
+        data = data[data['Classification'].isin(comp)]
 
     if oppo_comp is not None:
-        data = data[data['Opponent Classification'] == oppo_comp]
+        data = data[data['Opponent Classification'].isin(oppo_comp)]
 
     if heroes:
         data = data[data['Hero'].isin(heroes)]
@@ -58,22 +58,28 @@ def query_data(event, context):
     if stats:
         data = data[data['Stat'].isin(stats)]
 
+    stats_to_return = []
     if aggregation == 'PLAYER':
         data = data[['Player', 'Stat', 'Amount']].groupby(
             by=['Player', 'Stat']).sum().reset_index()
+        stats_to_return = data['Stat'].unique().tolist()
         data = data.pivot(index='Player', columns='Stat', values='Amount').fillna(0.0).reset_index()
     elif aggregation == 'TEAM':
         data = data[['Team Name', 'Stat', 'Amount']].groupby(
             by=['Team Name', 'Stat']).sum().reset_index()
+        stats_to_return = data['Stat'].unique().tolist()
         data = data.pivot(index='Team Name', columns='Stat', values='Amount').fillna(0.0).reset_index()
     elif aggregation == 'HERO':
         data = data[['Hero', 'Stat', 'Amount']].groupby(
             by=['Hero', 'Stat']).sum().reset_index()
+        stats_to_return = data['Stat'].unique().tolist()
         data = data.pivot(index='Hero', columns='Stat', values='Amount').fillna(0.0).reset_index()
 
 
     data = data.round(2)
+    data.columns = [camelize(c) for c in data.columns]
     return api_response({
-        'data': data.to_dict('records')
+        'data': data.to_dict('records'),
+        'stats': stats_to_return
     })
 
