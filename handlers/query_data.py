@@ -46,10 +46,10 @@ def query_data(event, context):
     if map_names:
         data = data[data['Map Name'].isin(map_names)]
 
-    if comp is not None:
+    if comp:
         data = data[data['Classification'].isin(comp)]
 
-    if oppo_comp is not None:
+    if oppo_comp:
         data = data[data['Opponent Classification'].isin(oppo_comp)]
 
     if heroes:
