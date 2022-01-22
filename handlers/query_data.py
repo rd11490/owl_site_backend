@@ -2,10 +2,10 @@ import pandas as pd
 import boto3
 import json
 
-
 from utils.helpers import api_response, bad_request, camelize
 
 s3_client = boto3.client('s3')
+
 
 def query_data(event, context):
     data = pd.read_csv('s3://owl-site-data/hero_data.csv')
@@ -14,7 +14,7 @@ def query_data(event, context):
     print(body)
     aggregation = body.get('aggregation')
 
-    if aggregation is None or aggregation not in ['TEAM', 'PLAYER', 'HERO']:
+    if aggregation is None or aggregation not in ['TEAM', 'PLAYER', 'HERO', 'TEAMANDHERO', 'PLAYERANDHERO']:
         return bad_request('aggregation must be set')
 
     teams = body.get('teams')
@@ -74,7 +74,16 @@ def query_data(event, context):
             by=['Hero', 'Stat']).sum().reset_index()
         stats_to_return = data['Stat'].unique().tolist()
         data = data.pivot(index='Hero', columns='Stat', values='Amount').fillna(0.0).reset_index()
-
+    elif aggregation == 'TEAMANDHERO':
+        data = data[['Team Name', 'Hero', 'Stat', 'Amount']].groupby(
+            by=['Team Name', 'Hero', 'Stat']).sum().reset_index()
+        stats_to_return = data['Stat'].unique().tolist()
+        data = data.groupby(by=['Team Name', 'Hero', 'Stat'])['Amount'].sum().unstack('Stat').reset_index().fillna(0.0)
+    elif aggregation == 'PLAYERANDHERO':
+        data = data[['Player', 'Hero', 'Stat', 'Amount']].groupby(
+            by=['Player', 'Hero', 'Stat']).sum().reset_index()
+        stats_to_return = data['Stat'].unique().tolist()
+        data = data.groupby(by=['Player', 'Hero', 'Stat'])['Amount'].sum().unstack('Stat').reset_index().fillna(0.0)
 
     data = data.round(2)
     data.columns = [camelize(c) for c in data.columns]
@@ -82,4 +91,3 @@ def query_data(event, context):
         'data': data.to_dict('records'),
         'stats': stats_to_return
     })
-
