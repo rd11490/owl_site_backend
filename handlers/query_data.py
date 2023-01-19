@@ -8,10 +8,14 @@ s3_client = boto3.client('s3')
 
 
 def query_data(event, context):
-    data = pd.read_csv('s3://owl-site-data/hero_data.csv')
-
     body = json.loads(event['body'])
     print(body)
+    season = body.get('season')
+    if season == '2021':
+        data = pd.read_csv('s3://owl-site-data/hero_data.csv')
+    elif season == '2022':
+        data = pd.read_csv('s3://owl-site-data/hero_data_2022.csv')
+
     aggregation = body.get('aggregation')
 
     if aggregation is None or aggregation not in ['TEAM', 'PLAYER', 'HERO', 'TEAMANDHERO', 'PLAYERANDHERO']:

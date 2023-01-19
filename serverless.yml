@@ -54,6 +54,25 @@ functions:
           method: post
           cors: true
 
+  getschedule:
+    handler: handlers.get_schedule.get_schedule
+    layers:
+      - { Ref: PythonRequirementsLambdaLayer }
+    events:
+      - http:
+          path: schedule
+          method: get
+          cors: true
+
+  simulate:
+    handler: handlers.sim_stage.sim_stage
+    layers:
+      - { Ref: PythonRequirementsLambdaLayer }
+    events:
+      - http:
+          path: sim
+          method: post
+          cors: true
 plugins:
   - serverless-python-requirements
   - serverless-plugin-log-retention
