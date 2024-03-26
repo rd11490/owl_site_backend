@@ -11,7 +11,7 @@ def get_setup(event, context):
         season_tag = ''
     else:
         season = qp.get('season')
-        if season in ['2022']:
+        if season in ['2022', '2023']:
             season_tag = f'_{season}'
         else:
             season_tag = ''

@@ -19,7 +19,7 @@ service: owl-site-backend # NOTE: update this with your service name
 
 provider:
   name: aws
-  runtime: python3.7
+  runtime: python3.9
   stage: dev
   region: us-east-1
   timeout: 30 # optional, in seconds, default is 6
@@ -54,24 +54,14 @@ functions:
           method: post
           cors: true
 
-  getschedule:
-    handler: handlers.get_schedule.get_schedule
+  circuitPoints:
+    handler: handlers.get_circuit_points.get_circuit_points
     layers:
       - { Ref: PythonRequirementsLambdaLayer }
     events:
       - http:
-          path: schedule
+          path: circuitPoints
           method: get
-          cors: true
-
-  simulate:
-    handler: handlers.sim_stage.sim_stage
-    layers:
-      - { Ref: PythonRequirementsLambdaLayer }
-    events:
-      - http:
-          path: sim
-          method: post
           cors: true
 plugins:
   - serverless-python-requirements

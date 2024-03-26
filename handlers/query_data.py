@@ -15,6 +15,8 @@ def query_data(event, context):
         data = pd.read_csv('s3://owl-site-data/hero_data.csv')
     elif season == '2022':
         data = pd.read_csv('s3://owl-site-data/hero_data_2022.csv')
+    elif season == '2023':
+        data = pd.read_csv('s3://owl-site-data/hero_data_2023.csv')
 
     aggregation = body.get('aggregation')
 
