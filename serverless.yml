@@ -30,6 +30,15 @@ custom:
     layer: true
     useStaticCache: true
     useDownloadCache: true
+    slim: true
+    strip: true
+    noDeploy:
+      - boto3
+      - botocore
+      - docutils
+      - setuptools
+      - pip
+      - wheel
 
   logRetentionInDays: 7 # used to set a global value for all functions
 

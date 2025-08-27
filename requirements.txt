@@ -2,7 +2,6 @@
 # $ conda create --name <env> --file <this file>
 # platform: osx-64
 pandas==2.2.1
-numpy===1.26.4
 fsspec===2023.10.0
 s3fs===2023.10.0
 requests===2.31.0
