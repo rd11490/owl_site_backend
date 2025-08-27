@@ -19,7 +19,7 @@ service: owl-site-backend # NOTE: update this with your service name
 
 provider:
   name: aws
-  runtime: python3.9
+  runtime: python3.11
   stage: dev
   region: us-east-1
   timeout: 30 # optional, in seconds, default is 6
@@ -34,10 +34,17 @@ custom:
   logRetentionInDays: 7 # used to set a global value for all functions
 
 functions:
+  basicAuth:
+    handler: handlers.basic_auth.basic_auth
+    environment:
+      AUTH_USER: ${env:AUTH_USER}
+      AUTH_PASS: ${env:AUTH_PASS}
   getsetup:
     handler: handlers.get_setup.get_setup
     layers:
       - {Ref: PythonRequirementsLambdaLayer}
+    environment:
+      OWL_SITE_DATA_BUCKET: ${env:OWL_SITE_DATA_BUCKET}
     events:
       - http:
           path: setup
@@ -53,16 +60,45 @@ functions:
           path: query
           method: post
           cors: true
+    environment:
+      OWL_SITE_DATA_BUCKET: ${env:OWL_SITE_DATA_BUCKET}
 
-  circuitPoints:
-    handler: handlers.get_circuit_points.get_circuit_points
+  faceitRosters:
+    handler: handlers.get_faceit_rosters.get_faceit_rosters
     layers:
       - { Ref: PythonRequirementsLambdaLayer }
     events:
       - http:
-          path: circuitPoints
+          path: faceitRosters
           method: get
           cors: true
+    environment:
+      OWL_SITE_DATA_BUCKET: ${env:OWL_SITE_DATA_BUCKET}
+
+  scrapeWinRatesScheduled:
+    handler: handlers.scrape_win_rates.scrape_win_rates
+    layers:
+      - { Ref: PythonRequirementsLambdaLayer }
+    timeout: 900 # 15 minutes
+    environment:
+      OWL_SITE_DATA_BUCKET: ${env:OWL_SITE_DATA_BUCKET}
+    events:
+      - schedule:
+          rate: cron(0 */4 * * ? *) # Americas, every 4 hours
+          enabled: true
+          input:
+            region: Americas
+      - schedule:
+          rate: cron(30 */4 * * ? *) # Asia, every 4 hours (offset by 30 min)
+          enabled: true
+          input:
+            region: Asia
+      - schedule:
+          rate: cron(0 1-23/4 * * ? *) # Europe, every 4 hours (offset by 1 hour)
+          enabled: true
+          input:
+            region: Europe
+
 plugins:
   - serverless-python-requirements
   - serverless-plugin-log-retention

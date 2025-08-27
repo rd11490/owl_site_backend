@@ -1,6 +1,7 @@
 import pandas as pd
+import pandas as pd
 import boto3
-import json
+import os
 
 from utils.helpers import api_response, bad_request, camelize
 
@@ -11,12 +12,19 @@ def query_data(event, context):
     body = json.loads(event['body'])
     print(body)
     season = body.get('season')
-    if season == '2021':
-        data = pd.read_csv('s3://owl-site-data/hero_data.csv')
+    bucket = os.environ.get('OWL_SITE_DATA_BUCKET')
+    if season == '2018':
+        data = pd.read_csv(f's3://{bucket}/hero_data_2018.csv')
+    elif season == '2019':
+        data = pd.read_csv(f's3://{bucket}/hero_data_2019.csv')
+    elif season == '2020':
+        data = pd.read_csv(f's3://{bucket}/hero_data_2020.csv')
+    elif season == '2021':
+        data = pd.read_csv(f's3://{bucket}/hero_data.csv')
     elif season == '2022':
-        data = pd.read_csv('s3://owl-site-data/hero_data_2022.csv')
+        data = pd.read_csv(f's3://{bucket}/hero_data_2022.csv')
     elif season == '2023':
-        data = pd.read_csv('s3://owl-site-data/hero_data_2023.csv')
+        data = pd.read_csv(f's3://{bucket}/hero_data_2023.csv')
 
     aggregation = body.get('aggregation')
 
