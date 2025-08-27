@@ -17,8 +17,15 @@ jobs:
         with:
           python-version: '3.11'
 
+
       - name: Install Serverless Framework v2
         run: npm install -g serverless@2
+
+
+      - name: Install Serverless Plugins
+        run: |
+          npm install --save-dev serverless-python-requirements
+          npm install --save-dev serverless-plugin-log-retention
 
       - name: Install dependencies
         run: |
