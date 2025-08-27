@@ -34,11 +34,6 @@ custom:
   logRetentionInDays: 7 # used to set a global value for all functions
 
 functions:
-  basicAuth:
-    handler: handlers.basic_auth.basic_auth
-    environment:
-      AUTH_USER: ${env:AUTH_USER}
-      AUTH_PASS: ${env:AUTH_PASS}
   getsetup:
     handler: handlers.get_setup.get_setup
     layers:

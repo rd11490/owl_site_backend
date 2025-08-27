@@ -77,7 +77,7 @@ Returns Overwatch stats data filtered and aggregated by season, aggregation type
 **Type:** Scheduled (CloudWatch Events) & API Gateway (POST)
 **Path:** /scrapeWinRates
 **Description:**
-Fetches Overwatch win rate data from Blizzard API for all tiers/maps/regions, aggregates results, and writes CSVs to S3. Scheduled runs are region-specific and run every 4 hours. API runs require basic auth and a region input.
+Fetches Overwatch win rate data from Blizzard API for all tiers/maps/regions, aggregates results, and writes CSVs to S3. Scheduled runs are region-specific and run every 4 hours.
 **Request Data Model (API):**
 ```
 {
