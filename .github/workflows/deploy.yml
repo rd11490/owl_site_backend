@@ -17,8 +17,8 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install Serverless Framework
-        run: npm install -g serverless
+      - name: Install Serverless Framework v2
+        run: npm install -g serverless@2
 
       - name: Install dependencies
         run: |
@@ -34,8 +34,6 @@ jobs:
 
       - name: Deploy with Serverless
         env:
-          AUTH_USER: ${{ secrets.AUTH_USER }}
-          AUTH_PASS: ${{ secrets.AUTH_PASS }}
           OWL_SITE_DATA_BUCKET: ${{ secrets.OWL_SITE_DATA_BUCKET }}
         run: |
           serverless deploy --stage dev
