@@ -67,18 +67,6 @@ functions:
     environment:
       OWL_SITE_DATA_BUCKET: ${env:OWL_SITE_DATA_BUCKET}
 
-  faceitRosters:
-    handler: handlers.get_faceit_rosters.get_faceit_rosters
-    layers:
-      - { Ref: PythonRequirementsLambdaLayer }
-    events:
-      - http:
-          path: faceitRosters
-          method: get
-          cors: true
-    environment:
-      OWL_SITE_DATA_BUCKET: ${env:OWL_SITE_DATA_BUCKET}
-
   scrapeWinRatesScheduled:
     handler: handlers.scrape_win_rates.scrape_win_rates
     layers:
