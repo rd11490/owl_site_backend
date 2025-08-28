@@ -17,7 +17,7 @@ def get_setup(event, context):
         else:
             season_tag = ''
     
-    bucket = os.environ.get('OWL_SITE_DATA_BUCKET', 'owl-site-data')
+    bucket = os.environ.get('OWL_SITE_DATA_BUCKET')
     players = pd.read_csv(f's3://{bucket}/teams_players{season_tag}.csv')
     player_resp = players.to_dict('records')
 

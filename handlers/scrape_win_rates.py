@@ -40,7 +40,7 @@ MAP_LIST = [
 ]
 
 def scrape_win_rates(event, context):
-    bucket = os.environ.get('OWL_SITE_DATA_BUCKET', 'owl-site-data')
+    bucket = os.environ.get('OWL_SITE_DATA_BUCKET')
     region = None
     # Support both scheduled and HTTP (API Gateway) input
     if event:
