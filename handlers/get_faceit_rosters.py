@@ -1,10 +1,8 @@
 import pandas as pd
-import boto3
 
 from utils.facit_tournaments import facit_tournaments, wara_tournaments
 from utils.helpers import api_response
 
-s3_client = boto3.client('s3')
 
 def get_faceit_rosters(event, context):
     import os

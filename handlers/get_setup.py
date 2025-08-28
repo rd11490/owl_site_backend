@@ -4,7 +4,6 @@ import os
 
 from utils.helpers import api_response
 
-## Removed unused s3_client
 
 
 def get_setup(event, context):

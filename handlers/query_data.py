@@ -1,11 +1,8 @@
 import pandas as pd
-import pandas as pd
-import boto3
 import os
 
 from utils.helpers import api_response, bad_request, camelize
 
-s3_client = boto3.client('s3')
 
 
 def query_data(event, context):
