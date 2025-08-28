@@ -1,10 +1,10 @@
 import pandas as pd
-import boto3
+## Removed boto3 import; pandas with s3fs handles S3 access
 import os
 
 from utils.helpers import api_response
 
-s3_client = boto3.client('s3')
+## Removed unused s3_client
 
 
 def get_setup(event, context):
