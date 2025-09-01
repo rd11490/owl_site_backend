@@ -73,7 +73,37 @@ Returns Overwatch stats data filtered and aggregated by season, aggregation type
 }
 ```
 
-### scrape_win_rates
+### query_win_rates
+**Type:** API Gateway (POST)
+**Path:** /queryWinRates
+**Description:**
+Returns Overwatch win rate data filtered by date, region, map, hero, and rank. Reads win rate CSVs from S3 and returns grouped results for each hero/map/rank/region combination.
+**Request Data Model:**
+```
+{
+	"dateRange": { "min": "2024-01-01", "max": "2024-12-31" },
+	"region": ["Americas", "Asia", "Europe"],
+	"map": ["Map1", "Map2"],
+	"hero": ["Hero1", "Hero2"],
+	"rank": ["All", "Diamond"]
+}
+```
+**Response Data Model:**
+```
+[
+	{
+		"hero": "Hero1",
+		"map": "Map1",
+		"rank": "Diamond",
+		"region": "Americas",
+		"data": [
+			{ "winRate": 0.52, "pickRate": 0.13, "date": "2024-01-01" },
+			...
+		]
+	},
+	...
+]
+```
 **Type:** Scheduled (CloudWatch Events) & API Gateway (POST)
 **Path:** /scrapeWinRates
 **Description:**

@@ -38,6 +38,8 @@ custom:
       - docutils
       - setuptools
       - pip
+    extraPaths:
+      - src
       - wheel
 
   logRetentionInDays: 7 # used to set a global value for all functions
