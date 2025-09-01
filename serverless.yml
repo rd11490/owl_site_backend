@@ -38,9 +38,7 @@ custom:
       - docutils
       - setuptools
       - pip
-    extraPaths:
-      - src
-      - wheel
+  # Removed extraPaths; packaging handlers and utils at root
 
   logRetentionInDays: 7 # used to set a global value for all functions
 
@@ -109,7 +107,9 @@ plugins:
   - serverless-plugin-log-retention
 package:
   include:
-    - src/**
+    - src/handlers/**
+    - src/utils/**
+    - src/__init__.py
   exclude:
     - tests/**
     - docs/**
