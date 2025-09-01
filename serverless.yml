@@ -107,9 +107,9 @@ plugins:
   - serverless-plugin-log-retention
 package:
   include:
-    - src/handlers/**
-    - src/utils/**
-    - src/__init__.py
+    - handlers/**
+    - utils/**
+    - __init__.py
   exclude:
     - tests/**
     - docs/**

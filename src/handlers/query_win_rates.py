@@ -19,13 +19,7 @@ def query_win_rates(event, context):
     heroes = body.get('hero', HERO_LIST)
     ranks = body.get('rank', ['All'])
 
-    # If rank or map is null or empty, use ['All']
-    if not ranks:
-        ranks = ['All']
-    if not maps:
-        maps = ['all-maps']
-
-    bucket = os.environ.get('OWL_SITE_DATA_BUCKET', 'owl-site-data')
+    bucket = os.environ.get('OWL_SITE_DATA_BUCKET')
     results = []
 
     for region in regions:
