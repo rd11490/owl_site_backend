@@ -1,3 +1,6 @@
+      - name: Run unit tests
+        run: |
+          PYTHONPATH=src pytest tests
 name: Deploy to AWS Lambda
 
 on:

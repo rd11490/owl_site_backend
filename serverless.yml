@@ -43,8 +43,19 @@ custom:
   logRetentionInDays: 7 # used to set a global value for all functions
 
 functions:
+  queryWinRates:
+    handler: src/handlers/query_win_rates.query_win_rates
+    layers:
+      - { Ref: PythonRequirementsLambdaLayer }
+    environment:
+      OWL_SITE_DATA_BUCKET: ${env:OWL_SITE_DATA_BUCKET}
+    events:
+      - http:
+          path: queryWinRates
+          method: post
+          cors: true
   getsetup:
-    handler: handlers.get_setup.get_setup
+    handler: src/handlers/get_setup.get_setup
     layers:
       - {Ref: PythonRequirementsLambdaLayer}
     environment:
@@ -56,7 +67,7 @@ functions:
           cors: true
 
   query:
-    handler: handlers.query_data.query_data
+    handler: src/handlers/query_data.query_data
     layers:
       - { Ref: PythonRequirementsLambdaLayer }
     events:
@@ -68,7 +79,7 @@ functions:
       OWL_SITE_DATA_BUCKET: ${env:OWL_SITE_DATA_BUCKET}
 
   scrapeWinRatesScheduled:
-    handler: handlers.scrape_win_rates.scrape_win_rates
+    handler: src/handlers/scrape_win_rates.scrape_win_rates
     layers:
       - { Ref: PythonRequirementsLambdaLayer }
     timeout: 900 # 15 minutes
@@ -92,5 +103,14 @@ functions:
             region: Europe
 
 plugins:
+package:
+  include:
+    - src/**
+  exclude:
+    - tests/**
+    - docs/**
+    - .github/**
+    - .git/**
+    - node_modules/**
   - serverless-python-requirements
   - serverless-plugin-log-retention
