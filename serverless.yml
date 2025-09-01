@@ -103,6 +103,8 @@ functions:
             region: Europe
 
 plugins:
+  - serverless-python-requirements
+  - serverless-plugin-log-retention
 package:
   include:
     - src/**
@@ -112,5 +114,3 @@ package:
     - .github/**
     - .git/**
     - node_modules/**
-  - serverless-python-requirements
-  - serverless-plugin-log-retention
