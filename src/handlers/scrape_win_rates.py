@@ -81,7 +81,15 @@ def scrape_win_rates(event, context):
         region_df = pd.concat(region_dfs, ignore_index=True)
         filename = f"overwatch_win_rates_{region.lower()}.csv"
         s3_path = f"s3://{bucket}/{filename}"
-        region_df.to_csv(s3_path, index=False)
-        print(f"Saved {s3_path} with {len(region_df)} rows.")
+        # Try to read existing CSV from S3
+        try:
+            existing_df = pd.read_csv(s3_path)
+            combined_df = pd.concat([existing_df, region_df], ignore_index=True)
+            print(f"Appending to existing {s3_path}, total rows: {len(combined_df)}")
+        except Exception as e:
+            combined_df = region_df
+            print(f"No existing file or error reading {s3_path}: {e}. Writing new file.")
+        combined_df.to_csv(s3_path, index=False)
+        print(f"Saved {s3_path} with {len(combined_df)} rows.")
     else:
         print(f"No data collected for region {region}.")
