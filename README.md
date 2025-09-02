@@ -1,6 +1,31 @@
+
 # owl_site_backend
 Backend for owl site
 
+## Running Tests Locally
+
+Tests are located in the `tests/` directory and use pytest. To run all tests locally:
+
+```bash
+pip install -r requirements.txt
+pip install pytest
+PYTHONPATH=src pytest
+```
+
+If you use a virtual environment, activate it before installing dependencies.
+
+To run a specific test file:
+```bash
+PYTHONPATH=src pytest tests/handlers/test_query_data.py
+```
+
+To see test coverage (optional):
+```bash
+pip install pytest-cov
+PYTHONPATH=src pytest --cov=src
+```
+
+## Deployment
 
 To deploy:
 
@@ -104,7 +129,7 @@ Returns Overwatch win rate data filtered by date, region, map, hero, and rank. R
 	...
 ]
 ```
-**Type:** Scheduled (CloudWatch Events) & API Gateway (POST)
+**Type:** Scheduled (CloudWatch Events)
 **Path:** /scrapeWinRates
 **Description:**
 Fetches Overwatch win rate data from Blizzard API for all tiers/maps/regions, aggregates results, and writes CSVs to S3. Scheduled runs are region-specific and run every 4 hours.
