@@ -90,10 +90,10 @@ def scrape_win_rates(event, context):
             combined_df = region_df
             print(f"No existing file or error reading {s3_path}: {e}. Writing new file.")
         # Drop duplicates before saving
-    # Only use name, map, region, tier, and date for deduplication
-    index_cols = ["name", "map", "region", "tier", "date"]
-    deduped_df = combined_df.drop_duplicates(subset=index_cols)
-    deduped_df.to_csv(s3_path, index=False)
-    print(f"Saved {s3_path} with {len(deduped_df)} rows after dropping duplicates.")
+        # Only use name, map, region, tier, and date for deduplication
+        index_cols = ["name", "map", "region", "tier", "date"]
+        deduped_df = combined_df.drop_duplicates(subset=index_cols)
+        deduped_df.to_csv(s3_path, index=False)
+        print(f"Saved {s3_path} with {len(deduped_df)} rows after dropping duplicates.")
     else:
         print(f"No data collected for region {region}.")
