@@ -68,7 +68,7 @@ def scrape_win_rates(event, context):
                 "map": map_name,
                 "region": region,
                 "role": "All",
-                "rq": "2",
+                "rq": "1",
                 "tier": tier
             }
             try:
