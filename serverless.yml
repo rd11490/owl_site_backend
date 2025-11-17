@@ -47,6 +47,7 @@ functions:
     handler: src/handlers/query_win_rates.query_win_rates
     layers:
       - { Ref: PythonRequirementsLambdaLayer }
+    memorySize: 4096
     environment:
       OWL_SITE_DATA_BUCKET: ${env:OWL_SITE_DATA_BUCKET}
     events:
