@@ -89,6 +89,7 @@ HERO_LIST = [
     "Symmetra",
     "Torbjörn",
     "Tracer",
+    "Vendetta",
     "Venture",
     "Widowmaker",
     "Winston",
