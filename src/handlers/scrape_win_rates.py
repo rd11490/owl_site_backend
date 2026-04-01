@@ -1,4 +1,5 @@
 import datetime
+import zoneinfo
 import requests
 import pandas as pd
 import os
@@ -13,7 +14,7 @@ def fetch_win_rates(params):
     response.raise_for_status()
     data = response.json()
     rows = []
-    today = datetime.date.today().isoformat()
+    today = datetime.datetime.now(zoneinfo.ZoneInfo("America/New_York")).date().isoformat()
     for rate in data.get("rates", []):
         cell = rate.get('cells', {})
         row = {
