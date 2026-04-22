@@ -84,6 +84,7 @@ functions:
     layers:
       - { Ref: PythonRequirementsLambdaLayer }
     timeout: 900 # 15 minutes
+    memorySize: 4096
     environment:
       OWL_SITE_DATA_BUCKET: ${env:OWL_SITE_DATA_BUCKET}
     events:
