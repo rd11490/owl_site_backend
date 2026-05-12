@@ -21,6 +21,7 @@ def fetch_win_rates(params):
             "name": cell.get("name"),
             "pickrate": cell.get("pickrate"),
             "winrate": cell.get("winrate"),
+            "banrate": cell.get("banrate"),
             **params,
             "date": today
         }

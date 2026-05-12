@@ -18,6 +18,7 @@ def test_valid_region(monkeypatch):
         'name': ['Ana'],
         'pickrate': [10.0],
         'winrate': [50.0],
+        'banrate': [5.0],
         'map': ['all-maps'],
         'region': ['Americas'],
         'tier': ['All'],

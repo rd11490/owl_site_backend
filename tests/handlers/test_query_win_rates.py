@@ -16,6 +16,7 @@ def test_empty_body(monkeypatch):
         'name': ['Ana'],
         'pickrate': [10.0],
         'winrate': [50.0],
+        'banrate': [5.0],
         'map': ['all-maps'],
         'region': ['Americas'],
         'tier': ['All'],
@@ -34,6 +35,7 @@ def test_empty_body(monkeypatch):
     assert data[0]['region'] == 'Americas'
     assert data[0]['data'][0]['winRate'] == 50.0
     assert data[0]['data'][0]['pickRate'] == 10.0
+    assert data[0]['data'][0]['banRate'] == 5.0
     assert data[0]['data'][0]['date'] == '2025-09-01'
 
 def test_filters(monkeypatch):
@@ -41,6 +43,7 @@ def test_filters(monkeypatch):
         'name': ['Ana', 'Ashe'],
         'pickrate': [10.0, 20.0],
         'winrate': [50.0, 60.0],
+        'banrate': [5.0, 8.0],
         'map': ['all-maps', 'busan'],
         'region': ['Americas', 'Asia'],
         'tier': ['All', 'Bronze'],

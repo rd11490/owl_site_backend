@@ -50,6 +50,7 @@ def query_win_rates(event, context):
                 {
                     'winRate': row['winrate'],
                     'pickRate': row['pickrate'],
+                    'banRate': row.get('banrate'),
                     'date': row['date']
                 }
                 for _, row in group_sorted.iterrows()
